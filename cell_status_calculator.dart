@@ -1,12 +1,14 @@
 abstract interface class StatusCalculator {
+  StatusCalculator._internal();
+
   bool calculateStatus(
     int numberOfLiveNeighbors,
     bool currentStatus,
   );
 }
 
-final class CellStatusCalculator implements StatusCalculator {
-  CellStatusCalculator._internal();
+final class CellStatusCalculator extends StatusCalculator {
+  CellStatusCalculator._internal() : super._internal();
   static CellStatusCalculator? _instance;
 
   factory CellStatusCalculator() =>

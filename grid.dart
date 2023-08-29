@@ -9,22 +9,24 @@ final class Grid extends PlayingField {
   Grid._internal(
     int rows,
     int columns,
-    GridState state,
   )   : rows = rows,
         columns = columns,
-        state = state,
         super._internal() {
     _instance = this;
   }
 
-  factory Grid(int rows, int columns, GridState state) =>
+  int get area => rows * columns;
+
+  factory Grid(
+    int rows,
+    int columns,
+  ) =>
       _instance ??= Grid._internal(
         rows,
         columns,
-        state,
       );
 
   final int rows;
   final int columns;
-  GridState state;
+  late GridState? state;
 }
