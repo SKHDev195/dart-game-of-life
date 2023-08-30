@@ -1,30 +1,14 @@
 import 'grid_state.dart';
 
-abstract base class PlayingField {
-  PlayingField._internal();
-}
+abstract base class PlayingField {}
 
 final class Grid extends PlayingField {
-  static Grid? _instance;
-  Grid._internal(
-    int rows,
-    int columns,
-  )   : rows = rows,
-        columns = columns,
-        super._internal() {
-    _instance = this;
-  }
+  Grid({
+    required this.rows,
+    required this.columns,
+  });
 
   int get area => rows * columns;
-
-  factory Grid(
-    int rows,
-    int columns,
-  ) =>
-      _instance ??= Grid._internal(
-        rows,
-        columns,
-      );
 
   final int rows;
   final int columns;
