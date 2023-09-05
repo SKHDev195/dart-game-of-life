@@ -1,6 +1,5 @@
-import 'package:game_of_life/proof-of-concept/grid_renderer.dart';
-
-import 'grid.dart';
+import '../grid/grid.dart';
+import 'grid_renderer.dart';
 
 abstract base class GridRendererCreator {
   GridRendererCreator({

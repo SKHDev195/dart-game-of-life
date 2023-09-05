@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'cell.dart';
+import '../cell/cell.dart';
 import 'grid_state.dart';
 
 abstract base class PlayingField {}

@@ -1,14 +1,10 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'grid_builder.dart';
-import 'grid_director.dart';
-import 'grid_renderer_creator.dart';
-import 'timer_context.dart';
-import 'timer_strategy.dart';
-import 'timer_types.dart';
-
-import 'grid_renderer.dart';
+import '../grid_director/grid_builder.dart';
+import '../grid_director/grid_director.dart';
+import '../grid_renderer/grid_renderer.dart';
+import '../grid_renderer/grid_renderer_creator.dart';
+import '../timer/timer_context.dart';
+import '../timer/timer_strategy.dart';
+import '../timer/timer_types.dart';
 
 void main() async {
   GridBuilder gridBuilder = BasicGridBuilder();
@@ -18,8 +14,8 @@ void main() async {
     );
 
   gridDirector.initialiseGrid(
-    20,
-    20,
+    30,
+    30,
   );
 
   TimerStrategy timerStrategy = BasicTimerStrategy(

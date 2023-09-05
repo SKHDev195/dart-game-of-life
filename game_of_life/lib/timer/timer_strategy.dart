@@ -1,8 +1,8 @@
-import 'package:game_of_life/proof-of-concept/cell_status_calculator.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 
-import 'cell.dart';
-import 'grid.dart';
+import '../cell/cell.dart';
+import '../grid/grid.dart';
+import '../utils/cell_status_calculator.dart';
 import 'timer_types.dart';
 
 abstract base class TimerStrategy {
@@ -56,7 +56,6 @@ final class BasicTimerStrategy extends TimerStrategy {
 
   @override
   void onTick() {
-    print('new tick');
     List<Cell> cells = [];
     for (int i = 0; i < grid.area; i++) {
       int numberOfLiveNeighbors = grid.getLiveNeighbours(i);

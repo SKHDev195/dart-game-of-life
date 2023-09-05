@@ -13,7 +13,10 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
+  flutter_state_notifier: ^1.0.0
   pausable_timer: ^2.0.0+1
+  provider: ^6.0.5
+  state_notifier: ^1.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

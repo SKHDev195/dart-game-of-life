@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'cell.dart';
+import '../cell/cell.dart';
 
 final class GridState extends Equatable {
   const GridState({
