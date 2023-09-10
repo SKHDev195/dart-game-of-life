@@ -1,9 +1,8 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:game_of_life/widgets/colored_grid.dart';
 
-import '../cell/cell.dart';
 import '../grid/grid.dart';
 
 abstract base class GridRenderer {
@@ -12,18 +11,43 @@ abstract base class GridRenderer {
   });
   final Grid grid;
 
-  Widget? deadCellRender;
-  Widget? aliveCellRender;
+  double getSize();
 
-  Widget renderGrid(List<Cell> cells);
+  Widget renderGrid();
 }
 
 final class ColoredGridRenderer extends GridRenderer {
-  // double getSide() {
-  //   FlutterView view = PlatformDispatcher.instance.views.first;
-  //   double width = view.physicalSize.width;
-  //   double height = view.physicalSize.height;
+  ColoredGridRenderer({
+    required this.aliveCellsColor,
+    required this.deadCellsColor,
+    required super.grid,
+  }) : super();
 
-  //   double resultWidth = (width - 20) / ((grid.rows - 1) * 3);
-  // }
+  final Color aliveCellsColor;
+  final Color deadCellsColor;
+
+  @override
+  double getSize() {
+    FlutterView view = PlatformDispatcher.instance.views.first;
+    double permittedWidth = (view.physicalSize.width - 20) / grid.columns;
+    double permittedHeight = (view.physicalSize.height - 20) / grid.rows;
+
+    double result =
+        (permittedWidth > permittedHeight) ? permittedHeight : permittedWidth;
+
+    return result;
+  }
+
+  @override
+  Widget renderGrid() {
+    final cellSize = getSize();
+    return ColoredGrid(
+      rows: grid.rows,
+      columns: grid.columns,
+      cells: grid.state!.cells,
+      aliveCellsColor: aliveCellsColor,
+      deadCellsColor: deadCellsColor,
+      cellSize: cellSize,
+    );
+  }
 }

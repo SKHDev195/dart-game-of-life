@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import '../cell/cell.dart';
 import 'grid_state.dart';
 
 abstract base class PlayingField {}
@@ -16,11 +13,6 @@ final class Grid extends PlayingField {
   final int rows;
   final int columns;
   late GridState? state;
-
-  final StreamController<List<Cell>> _cellsController =
-      StreamController<List<Cell>>.broadcast();
-  StreamSink<List<Cell>> get cellsSink => _cellsController.sink;
-  Stream<List<Cell>> get cellsStream => _cellsController.stream;
 
   int getLiveNeighbours(int index) {
     int rowIndex = index ~/ columns;
@@ -47,9 +39,5 @@ final class Grid extends PlayingField {
     }
 
     return liveNeighborCount;
-  }
-
-  dispose() {
-    _cellsController.close();
   }
 }

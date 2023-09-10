@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../grid/grid.dart';
 import 'grid_renderer.dart';
 
@@ -11,16 +13,22 @@ abstract base class GridRendererCreator {
   GridRenderer createRenderer();
 }
 
-final class SquareGridRendererCreator extends GridRendererCreator {
-  SquareGridRendererCreator({
+final class ColoredGridRenderedCreator extends GridRendererCreator {
+  ColoredGridRenderedCreator({
+    required this.aliveCellsColor,
+    required this.deadCellsColor,
     required super.grid,
   });
 
+  final Color aliveCellsColor;
+  final Color deadCellsColor;
+
   @override
   GridRenderer createRenderer() {
-    return SquareGridRenderer(
+    return ColoredGridRenderer(
+      aliveCellsColor: aliveCellsColor,
+      deadCellsColor: deadCellsColor,
       grid: grid,
-      stream: grid.cellsStream,
     );
   }
 }

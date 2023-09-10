@@ -75,10 +75,6 @@ final class BasicTimerStrategy extends TimerStrategy {
       cells: cells,
     );
 
-    grid.cellsSink.add(
-      grid.state!.cells,
-    );
-
     timer.reset();
     timer.start();
   }

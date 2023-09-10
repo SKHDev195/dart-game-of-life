@@ -11,10 +11,10 @@ abstract base class Director {
     this.builder = builder;
   }
 
-  void initialiseGrid(
-    int rows,
-    int columns,
-  );
+  void initialiseGrid({
+    required int rows,
+    required int columns,
+  });
 }
 
 final class GridDirector extends Director {
@@ -25,10 +25,10 @@ final class GridDirector extends Director {
   factory GridDirector() => _instance ??= GridDirector._internal();
 
   @override
-  void initialiseGrid(
-    int rows,
-    int columns,
-  ) {
+  void initialiseGrid({
+    required int rows,
+    required int columns,
+  }) {
     builder.createGrid(
       rows,
       columns,

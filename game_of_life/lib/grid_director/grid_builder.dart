@@ -21,7 +21,6 @@ abstract base class GridBuilder {
 
   void setInitialState() {
     _grid!.state = _initialState!;
-    _grid!.cellsSink.add(_grid!.state!.cells);
   }
 }
 
