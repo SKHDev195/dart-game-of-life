@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_of_life/pages/setup_page/widgets/fields.dart';
 import 'package:game_of_life/pages/setup_page/widgets/separator.dart';
+import 'package:game_of_life/pages/setup_page/widgets/start_button.dart';
 import 'package:game_of_life/providers/setup/setup_provider.dart';
 import 'package:game_of_life/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
@@ -44,10 +45,12 @@ class _SetupPageState extends State<SetupPage> {
     form.save();
 
     try {
-      context.read<SetupProvider>().setupGrid(
+      context.read<SetupProvider>().setupGridRenderer(
             timerType: timerType!,
             rows: rows!,
             columns: columns!,
+            aliveCellsColor: aliveCellsColor!,
+            deadCellsColor: deadCellsColor!,
           );
     } on CustomError catch (e) {
       ErrorDialogRenderer.errorDialog(
@@ -72,7 +75,6 @@ class _SetupPageState extends State<SetupPage> {
               key: _formKey,
               autovalidateMode: _autovalidateMode,
               child: ListView(
-                reverse: true,
                 shrinkWrap: true,
                 children: [
                   const Logo(),
@@ -83,6 +85,7 @@ class _SetupPageState extends State<SetupPage> {
                       rows = int.tryParse(newValue!)!;
                     },
                   ),
+                  const Separator(),
                   GridField(
                     label: 'Сolumns',
                     onSaved: (newValue) {
@@ -109,6 +112,11 @@ class _SetupPageState extends State<SetupPage> {
                       deadCellsColor = newValue;
                     },
                   ),
+                  const Separator(),
+                  StartButton(
+                    setupState: setupState,
+                    submit: _submit,
+                  )
                 ],
               ),
             ),

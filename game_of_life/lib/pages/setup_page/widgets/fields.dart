@@ -54,7 +54,7 @@ class _TimerFieldState extends State<TimerField> {
         return DropdownMenuItem(
           value: timerType,
           child: Text(
-            timerType.toString(),
+            timerType.name,
           ),
         );
       }).toList(),
@@ -83,9 +83,9 @@ class ColorPickerField extends StatefulWidget {
 }
 
 class _ColorPickerFieldState extends State<ColorPickerField> {
-  late Color screenPickerColor;
-  late Color dialogPickerColor;
-  late Color dialogSelectColor;
+  Color screenPickerColor = Colors.red;
+  Color dialogPickerColor = Colors.amber;
+  Color dialogSelectColor = Colors.blue;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,9 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
           dialogPickerColor,
           colorSwatchNameMap: ColorMap.colorsNameMap,
         )} '
-        'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
+        'aka ${ColorTools.nameThatColor(
+          dialogPickerColor,
+        )}',
       ),
       trailing: ColorIndicator(
         width: 44,

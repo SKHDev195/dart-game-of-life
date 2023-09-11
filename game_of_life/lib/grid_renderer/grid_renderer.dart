@@ -1,15 +1,18 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:game_of_life/widgets/colored_grid.dart';
+import '../timer/timer_context.dart';
+import '../widgets/colored_grid.dart';
 
 import '../grid/grid.dart';
 
 abstract base class GridRenderer {
   GridRenderer({
     required this.grid,
+    required this.timerContext,
   });
   final Grid grid;
+  final TimerContext timerContext;
 
   double getSize();
 
@@ -21,6 +24,7 @@ final class ColoredGridRenderer extends GridRenderer {
     required this.aliveCellsColor,
     required this.deadCellsColor,
     required super.grid,
+    required super.timerContext,
   }) : super();
 
   final Color aliveCellsColor;

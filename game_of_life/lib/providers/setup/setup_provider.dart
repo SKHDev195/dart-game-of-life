@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:game_of_life/grid_director/grid_builder.dart';
-import 'package:game_of_life/repositories/grid_repository.dart';
+import 'package:game_of_life/repositories/grid_renderer_repository.dart';
 
 import '../../models/custom_error.dart';
 import '../../timer/timer_types.dart';
@@ -14,22 +15,24 @@ final class SetupProvider extends StateNotifier<SetupState> with LocatorMixin {
           SetupState.initial(),
         );
 
-  void setupGrid({
+  void setupGridRenderer({
     required TimerTypes timerType,
     required int rows,
     required int columns,
+    required Color aliveCellsColor,
+    required Color deadCellsColor,
   }) {
     state = state.copyWith(
       setupStatus: SetupStatus.submitting,
     );
 
     try {
-      GridBuilder gridBuilder = BasicGridBuilder();
-      read<GridRepository>().createNewGrid(
-        gridBuilder: gridBuilder,
+      read<GridRendererRepository>().createNewGridRenderer(
         timerType: timerType,
         rows: rows,
         columns: columns,
+        aliveCellsColor: aliveCellsColor,
+        deadCellsColor: deadCellsColor,
       );
       state = state.copyWith(
         setupStatus: SetupStatus.success,
