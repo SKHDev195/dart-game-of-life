@@ -7,6 +7,7 @@ import 'package:game_of_life/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/custom_error.dart';
+import '../../providers/game_provider/game_provider.dart';
 import '../../timer/timer_types.dart';
 import 'widgets/logo.dart';
 
@@ -45,12 +46,15 @@ class _SetupPageState extends State<SetupPage> {
     form.save();
 
     try {
-      context.read<SetupProvider>().setupGridRenderer(
+      final gridRenderer = context.read<SetupProvider>().setupGridRenderer(
             timerType: timerType!,
             rows: rows!,
             columns: columns!,
             aliveCellsColor: aliveCellsColor!,
             deadCellsColor: deadCellsColor!,
+          );
+      context.read<GameProvider>().assignGridRenderer(
+            gridRenderer: gridRenderer,
           );
     } on CustomError catch (e) {
       ErrorDialogRenderer.errorDialog(
@@ -66,6 +70,9 @@ class _SetupPageState extends State<SetupPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Setup'),
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(

@@ -17,7 +17,8 @@ abstract base class TimerStrategy {
 
   void onTick();
   void onPause() => _timer.pause();
-  void onResume() => _timer.start();
+  void onStart() => _timer.start();
+  void onStop() => _timer.cancel();
 
   void setTimer(TimerTypes timerType) {
     PausableTimer timer = switch (timerType) {

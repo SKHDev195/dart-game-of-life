@@ -10,7 +10,8 @@ abstract class TimerContext {
   }
 
   void pause();
-  void resume();
+  void start();
+  void stop();
 }
 
 final class BasicTimerContext extends TimerContext {
@@ -18,5 +19,8 @@ final class BasicTimerContext extends TimerContext {
   void pause() => strategy.onPause();
 
   @override
-  void resume() => strategy.onResume();
+  void start() => strategy.onStart();
+
+  @override
+  void stop() => strategy.onStop();
 }
