@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'providers/game_provider/game_provider.dart';
+import 'repositories/game_repository.dart';
+import 'pages/game_page/game_page.dart';
 import 'pages/setup_page/setup_page.dart';
 import 'providers/setup/setup_provider.dart';
 import 'repositories/grid_renderer_repository.dart';
@@ -23,8 +26,14 @@ class GameOfLife extends StatelessWidget {
         Provider<GridRendererRepository>(
           create: (_) => GridRendererRepository(),
         ),
+        Provider<GameRepository>(
+          create: (_) => GameRepository(),
+        ),
         StateNotifierProvider<SetupProvider, SetupState>(
           create: (context) => SetupProvider(),
+        ),
+        StateNotifierProvider<GameProvider, GameState>(
+          create: (context) => GameProvider(),
         ),
       ],
       child: MaterialApp(
@@ -38,6 +47,7 @@ class GameOfLife extends StatelessWidget {
         home: const SetupPage(),
         routes: {
           SetupPage.routeName: (context) => const SetupPage(),
+          GamePage.routeName: (context) => const GamePage(),
         },
       ),
     );

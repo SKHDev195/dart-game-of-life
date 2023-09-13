@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:game_of_life/timer/timer_types.dart';
 
 import '../utils/color_map.dart';
-import '../utils/validators.dart';
 
-class GridField extends StatelessWidget {
-  const GridField({
-    super.key,
+class GridFormField extends StatelessWidget {
+  const GridFormField({
+    Key? key,
     required this.label,
     required this.onSaved,
-  });
+    required this.validator,
+  }) : super(key: key);
 
   final String label;
-  final void Function(String?)? onSaved;
+  final void Function(String?) onSaved;
+  final String? Function(String?) validator;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class GridField extends StatelessWidget {
         prefixIcon: const Icon(Icons.grid_3x3),
       ),
       onSaved: onSaved,
-      validator: (value) => Validators.validateRowsColumns(value),
+      validator: validator,
     );
   }
 }
@@ -62,7 +63,7 @@ class _TimerFieldState extends State<TimerField> {
         setState(() {
           timerType = newValue;
         });
-        widget.onChanged;
+        widget.onChanged!(newValue);
       },
     );
   }
@@ -126,7 +127,7 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
       color: dialogPickerColor,
       onColorChanged: (Color color) {
         setState(() => dialogPickerColor = color);
-        widget.onColorChanged;
+        widget.onColorChanged(color);
       },
       width: 40,
       height: 40,
@@ -171,7 +172,11 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
         final double curvedValue =
             Curves.easeInOutBack.transform(a1.value) - 1.0;
         return Transform(
-          transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+          transform: Matrix4.translationValues(
+            0.0,
+            curvedValue * 200,
+            0.0,
+          ),
           child: Opacity(
             opacity: a1.value,
             child: widget,
@@ -179,8 +184,11 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
         );
       },
       transitionDuration: const Duration(milliseconds: 400),
-      constraints:
-          const BoxConstraints(minHeight: 460, minWidth: 300, maxWidth: 320),
+      constraints: const BoxConstraints(
+        minHeight: 460,
+        minWidth: 300,
+        maxWidth: 320,
+      ),
     );
   }
 }

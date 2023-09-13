@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:game_of_life/pages/game_page/game_page.dart';
+import 'package:game_of_life/pages/setup_page/utils/validators.dart';
 import 'package:game_of_life/pages/setup_page/widgets/fields.dart';
 import 'package:game_of_life/pages/setup_page/widgets/separator.dart';
 import 'package:game_of_life/pages/setup_page/widgets/start_button.dart';
@@ -34,8 +36,6 @@ class _SetupPageState extends State<SetupPage> {
     setState(() {
       _autovalidateMode = AutovalidateMode.always;
     });
-    int? rows = int.tryParse(_rowsAsString!);
-    int? columns = int.tryParse(_columnsAsString!);
 
     final form = _formKey.currentState;
 
@@ -46,6 +46,9 @@ class _SetupPageState extends State<SetupPage> {
     form.save();
 
     try {
+      int? rows = int.tryParse(_rowsAsString!);
+      int? columns = int.tryParse(_columnsAsString!);
+
       final gridRenderer = context.read<SetupProvider>().setupGridRenderer(
             timerType: timerType!,
             rows: rows!,
@@ -56,6 +59,10 @@ class _SetupPageState extends State<SetupPage> {
       context.read<GameProvider>().assignGridRenderer(
             gridRenderer: gridRenderer,
           );
+      Navigator.pushNamed(
+        context,
+        GamePage.routeName,
+      );
     } on CustomError catch (e) {
       ErrorDialogRenderer.errorDialog(
         context,
@@ -86,18 +93,20 @@ class _SetupPageState extends State<SetupPage> {
                 children: [
                   const Logo(),
                   const Separator(),
-                  GridField(
+                  GridFormField(
                     label: 'Rows',
                     onSaved: (newValue) {
-                      rows = int.tryParse(newValue!)!;
+                      _rowsAsString = newValue;
                     },
+                    validator: (value) => Validators.validateRowsColumns(value),
                   ),
                   const Separator(),
-                  GridField(
+                  GridFormField(
                     label: 'Сolumns',
                     onSaved: (newValue) {
-                      columns = int.tryParse(newValue!)!;
+                      _columnsAsString = newValue;
                     },
+                    validator: (value) => Validators.validateRowsColumns(value),
                   ),
                   const Separator(),
                   TimerField(
