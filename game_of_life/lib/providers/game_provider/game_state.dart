@@ -11,13 +11,14 @@ enum GameStatus {
   error,
 }
 
-class GameState extends Equatable {
+final class GameState extends Equatable {
   const GameState({
     required this.gameStatus,
     required this.customError,
   });
 
   final GameStatus gameStatus;
+
   final CustomError customError;
 
   factory GameState.initial() {

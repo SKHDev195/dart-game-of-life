@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../cell/cell.dart';
 
-class ColoredGrid extends StatelessWidget {
+final class ColoredGrid extends StatelessWidget {
   const ColoredGrid({
     super.key,
     required this.rows,
@@ -43,7 +43,12 @@ class GridPainter extends CustomPainter {
   final double cellSize;
   final List<Color> cellColors;
 
-  GridPainter(this.rows, this.columns, this.cellSize, this.cellColors);
+  GridPainter(
+    this.rows,
+    this.columns,
+    this.cellSize,
+    this.cellColors,
+  );
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -56,6 +56,7 @@ class _SetupPageState extends State<SetupPage> {
             aliveCellsColor: aliveCellsColor!,
             deadCellsColor: deadCellsColor!,
           );
+
       context.read<GameProvider>().assignGridRenderer(
             gridRenderer: gridRenderer,
           );

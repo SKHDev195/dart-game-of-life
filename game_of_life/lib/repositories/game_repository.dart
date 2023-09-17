@@ -8,7 +8,7 @@ class GameRepository {
   void setRenderer({
     required GridRenderer gridRenderer,
   }) {
-    gridRenderer = gridRenderer;
+    this.gridRenderer = gridRenderer;
   }
 
   void pause() {

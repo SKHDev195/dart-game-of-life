@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:pausable_timer/pausable_timer.dart';
+import 'package:state_notifier/state_notifier.dart';
 
 import '../cell/cell.dart';
 import '../grid/grid.dart';
@@ -18,7 +21,7 @@ abstract base class TimerStrategy {
   void onTick();
   void onPause() => _timer.pause();
   void onStart() => _timer.start();
-  void onStop() => _timer.cancel();
+  void onStop() => timer.cancel();
 
   void setTimer(TimerTypes timerType) {
     PausableTimer timer = switch (timerType) {
@@ -48,7 +51,7 @@ abstract base class TimerStrategy {
   }
 }
 
-final class BasicTimerStrategy extends TimerStrategy {
+final class BasicTimerStrategy extends TimerStrategy with LocatorMixin {
   BasicTimerStrategy({
     required grid,
   }) : super(

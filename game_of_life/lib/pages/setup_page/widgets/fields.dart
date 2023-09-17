@@ -49,13 +49,20 @@ class _TimerFieldState extends State<TimerField> {
   TimerTypes? timerType = TimerTypes.perHalfSecond;
 
   @override
+  void initState() {
+    super.initState();
+    widget.onChanged!(timerType);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<TimerTypes>(
+      value: timerType,
       items: TimerTypes.values.map((TimerTypes timerType) {
         return DropdownMenuItem(
           value: timerType,
           child: Text(
-            timerType.name,
+            timerType.prettyName,
           ),
         );
       }).toList(),
@@ -87,6 +94,12 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
   Color screenPickerColor = Colors.red;
   Color dialogPickerColor = Colors.amber;
   Color dialogSelectColor = Colors.blue;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.onColorChanged(dialogPickerColor);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,10 +171,10 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
       colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,
-        ColorPickerType.primary: true,
-        ColorPickerType.accent: true,
+        ColorPickerType.primary: false,
+        ColorPickerType.accent: false,
         ColorPickerType.bw: false,
-        ColorPickerType.custom: true,
+        ColorPickerType.custom: false,
         ColorPickerType.wheel: true,
       },
       customColorSwatchesAndNames: ColorMap.colorsNameMap,

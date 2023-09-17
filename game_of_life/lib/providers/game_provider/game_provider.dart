@@ -14,6 +14,8 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
           GameState.initial(),
         );
 
+  late GridRenderer gridRenderer;
+
   void assignGridRenderer({
     required GridRenderer gridRenderer,
   }) {
@@ -21,6 +23,7 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
       read<GameRepository>().setRenderer(
         gridRenderer: gridRenderer,
       );
+      this.gridRenderer = gridRenderer;
     } on CustomError {
       state = state.copyWith(
         gameStatus: GameStatus.error,
@@ -29,9 +32,9 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
     }
   }
 
-  Widget displayGrid() {
+  Widget displayGrid(BuildContext context) {
     try {
-      Widget grid = read<GameRepository>().gridRenderer.renderGrid();
+      Widget grid = read<GameRepository>().gridRenderer.renderGrid(context);
       state = state.copyWith(
         gameStatus: GameStatus.initial,
       );

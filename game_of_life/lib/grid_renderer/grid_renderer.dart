@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import '../timer/timer_context.dart';
 import '../widgets/colored_grid.dart';
@@ -14,9 +12,9 @@ abstract base class GridRenderer {
   final Grid grid;
   final TimerContext timerContext;
 
-  double getSize();
+  double getSize(BuildContext context);
 
-  Widget renderGrid();
+  Widget renderGrid(BuildContext context);
 }
 
 final class ColoredGridRenderer extends GridRenderer {
@@ -31,10 +29,16 @@ final class ColoredGridRenderer extends GridRenderer {
   final Color deadCellsColor;
 
   @override
-  double getSize() {
-    FlutterView view = PlatformDispatcher.instance.views.first;
-    double permittedWidth = (view.physicalSize.width - 20) / grid.columns;
-    double permittedHeight = (view.physicalSize.height - 20) / grid.rows;
+  double getSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final aspectRatio = width / height;
+
+    final widthOffset = (aspectRatio < 1) ? 60 : 300;
+    final heightOffset = (aspectRatio > 1) ? 60 : 300;
+
+    double permittedWidth = (width - widthOffset) / grid.columns;
+    double permittedHeight = (height - heightOffset) / grid.rows;
 
     double result =
         (permittedWidth > permittedHeight) ? permittedHeight : permittedWidth;
@@ -43,8 +47,8 @@ final class ColoredGridRenderer extends GridRenderer {
   }
 
   @override
-  Widget renderGrid() {
-    final cellSize = getSize();
+  Widget renderGrid(BuildContext context) {
+    final cellSize = getSize(context);
     return ColoredGrid(
       rows: grid.rows,
       columns: grid.columns,

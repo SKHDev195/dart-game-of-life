@@ -11,6 +11,7 @@ class StopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: null,
       onPressed: onPressed,
       tooltip: 'Stop Game',
       child: const Icon(
@@ -31,6 +32,7 @@ class PauseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: null,
       onPressed: onPressed,
       tooltip: 'Pause Game',
       child: const Icon(
@@ -51,6 +53,7 @@ class StartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: null,
       onPressed: onPressed,
       tooltip: 'Start Game',
       child: const Icon(
