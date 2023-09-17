@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:game_of_life/pages/game_page/widgets/game_timer_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,11 @@ class _GamePageState extends State<GamePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              gameProvider.displayGrid(context),
+              StateNotifierBuilder(
+                stateNotifier: gameProvider,
+                builder: (context, value, child) =>
+                    gameProvider.displayGrid(context),
+              ),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:game_of_life/providers/game_provider/game_provider.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:state_notifier/state_notifier.dart';
 

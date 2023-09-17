@@ -88,4 +88,10 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
       rethrow;
     }
   }
+
+  void refresh() {
+    state = state.copyWith(
+      gameStatus: GameStatus.ongoing,
+    );
+  }
 }
