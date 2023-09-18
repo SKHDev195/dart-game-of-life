@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:game_of_life/repositories/game_repository.dart';
@@ -32,9 +34,13 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
     }
   }
 
-  Widget displayGrid(BuildContext context) {
+  Widget displayGrid(
+    BuildContext context,
+  ) {
     try {
-      Widget grid = read<GameRepository>().gridRenderer.renderGrid(context);
+      Widget grid = read<GameRepository>().gridRenderer.renderGrid(
+            context,
+          );
       state = state.copyWith(
         gameStatus: GameStatus.initial,
       );
@@ -49,7 +55,6 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
 
   void pause() {
     try {
-      read<GameRepository>().pause();
       state = state.copyWith(
         gameStatus: GameStatus.paused,
       );
@@ -63,7 +68,6 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
 
   void start() {
     try {
-      read<GameRepository>().start();
       state = state.copyWith(
         gameStatus: GameStatus.ongoing,
       );
@@ -77,7 +81,6 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
 
   void stop() {
     try {
-      read<GameRepository>().stop();
       state = state.copyWith(
         gameStatus: GameStatus.stopped,
       );
@@ -87,11 +90,5 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
       );
       rethrow;
     }
-  }
-
-  void refresh() {
-    state = state.copyWith(
-      gameStatus: GameStatus.ongoing,
-    );
   }
 }

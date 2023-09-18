@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
+import 'package:game_of_life/cell/cell.dart';
 
 import 'grid_state.dart';
 

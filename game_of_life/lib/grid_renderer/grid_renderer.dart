@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../timer/timer_context.dart';
 import '../widgets/colored_grid.dart';
 
 import '../grid/grid.dart';
@@ -7,10 +6,8 @@ import '../grid/grid.dart';
 abstract base class GridRenderer {
   GridRenderer({
     required this.grid,
-    required this.timerContext,
   });
-  final Grid grid;
-  final TimerContext timerContext;
+  Grid grid;
 
   double getSize(BuildContext context);
 
@@ -22,14 +19,15 @@ final class ColoredGridRenderer extends GridRenderer {
     required this.aliveCellsColor,
     required this.deadCellsColor,
     required super.grid,
-    required super.timerContext,
   }) : super();
 
   final Color aliveCellsColor;
   final Color deadCellsColor;
 
   @override
-  double getSize(BuildContext context) {
+  double getSize(
+    BuildContext context,
+  ) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final aspectRatio = width / height;

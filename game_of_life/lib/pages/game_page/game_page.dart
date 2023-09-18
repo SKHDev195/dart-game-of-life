@@ -4,6 +4,7 @@ import 'package:game_of_life/pages/game_page/widgets/game_timer_buttons.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/game_provider/game_provider.dart';
+import '../../providers/timer_context_provider/timer_context_provider.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({
@@ -19,25 +20,34 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     final gameProvider = context.read<GameProvider>();
+    final timerContextProvider = context.read<TimerContextProvider>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game of Life'),
         automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: SafeArea(
-          minimum: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              StateNotifierBuilder(
-                stateNotifier: gameProvider,
-                builder: (context, value, child) =>
-                    gameProvider.displayGrid(context),
+      body: StateNotifierBuilder(
+        stateNotifier: timerContextProvider,
+        builder: (context, value, child) {
+          return Center(
+            child: SafeArea(
+              minimum: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                    ),
+                    child: gameProvider.displayGrid(context),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
@@ -49,6 +59,7 @@ class _GamePageState extends State<GamePage> {
               child: StopButton(
                 onPressed: () {
                   gameProvider.stop();
+                  timerContextProvider.stop();
                   Navigator.pop(
                     context,
                   );
@@ -57,12 +68,18 @@ class _GamePageState extends State<GamePage> {
             ),
             Expanded(
               child: StartButton(
-                onPressed: gameProvider.start,
+                onPressed: () {
+                  gameProvider.start();
+                  timerContextProvider.start();
+                },
               ),
             ),
             Expanded(
               child: PauseButton(
-                onPressed: gameProvider.pause,
+                onPressed: () {
+                  gameProvider.pause();
+                  timerContextProvider.pause();
+                },
               ),
             ),
           ],

@@ -28,21 +28,11 @@ final class GridRendererRepository {
         rows: rows,
         columns: columns,
       );
-      TimerStrategy timerStrategy = BasicTimerStrategy(
-        grid: gridDirector.builder.grid,
-      )..setTimer(
-          timerType,
-        );
-      TimerContext timerContext = BasicTimerContext()
-        ..setStrategy(
-          timerStrategy,
-        );
 
       final gridRendererCreator = ColoredGridRenderedCreator(
         aliveCellsColor: aliveCellsColor,
         deadCellsColor: deadCellsColor,
         grid: gridDirector.builder.grid,
-        timerContext: timerContext,
       );
       return gridRendererCreator.createRenderer();
     } catch (e) {

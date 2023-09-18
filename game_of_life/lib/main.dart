@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'package:game_of_life/providers/timer_context_provider/timer_context_provider.dart';
 import 'providers/game_provider/game_provider.dart';
 import 'repositories/game_repository.dart';
 import 'pages/game_page/game_page.dart';
@@ -31,6 +32,9 @@ class GameOfLife extends StatelessWidget {
         ),
         StateNotifierProvider<SetupProvider, SetupState>(
           create: (context) => SetupProvider(),
+        ),
+        StateNotifierProvider<TimerContextProvider, TimerContextState>(
+          create: (context) => TimerContextProvider(),
         ),
         StateNotifierProvider<GameProvider, GameState>(
           create: (context) => GameProvider(),

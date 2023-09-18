@@ -1,25 +1,21 @@
-import 'dart:async';
-
-import 'package:game_of_life/providers/game_provider/game_provider.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'package:state_notifier/state_notifier.dart';
 
-import '../cell/cell.dart';
 import '../grid/grid.dart';
-import '../utils/cell_status_calculator.dart';
 import 'timer_types.dart';
 
 abstract base class TimerStrategy {
   TimerStrategy({
     required this.grid,
+    required this.onTick,
   });
+
+  final void Function() onTick;
 
   late PausableTimer _timer;
   PausableTimer get timer => _timer;
 
   Grid grid;
 
-  void onTick();
   void onPause() => _timer.pause();
   void onStart() => _timer.start();
   void onStop() => timer.cancel();
@@ -52,35 +48,12 @@ abstract base class TimerStrategy {
   }
 }
 
-final class BasicTimerStrategy extends TimerStrategy with LocatorMixin {
+final class BasicTimerStrategy extends TimerStrategy {
   BasicTimerStrategy({
     required grid,
+    required onTick,
   }) : super(
           grid: grid,
+          onTick: onTick,
         );
-
-  @override
-  void onTick() {
-    List<Cell> cells = [];
-    for (int i = 0; i < grid.area; i++) {
-      int numberOfLiveNeighbors = grid.getLiveNeighbours(i);
-      bool isAlive = CellStatusCalculator.calculateStatus(
-        numberOfLiveNeighbors,
-        grid.state!.cells[i].isAlive,
-      );
-      cells.add(
-        Cell(
-          index: i,
-          isAlive: isAlive,
-        ),
-      );
-    }
-
-    grid.state = grid.state!.copyWith(
-      cells: cells,
-    );
-
-    timer.reset();
-    timer.start();
-  }
 }

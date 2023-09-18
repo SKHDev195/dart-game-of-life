@@ -31,8 +31,16 @@ final class ColoredGrid extends StatelessWidget {
     }
 
     return CustomPaint(
-      size: Size(columns * cellSize, rows * cellSize),
-      painter: GridPainter(rows, columns, cellSize, cellColors),
+      size: Size(
+        columns * cellSize,
+        rows * cellSize,
+      ),
+      painter: GridPainter(
+        rows,
+        columns,
+        cellSize,
+        cellColors,
+      ),
     );
   }
 }
@@ -55,19 +63,28 @@ class GridPainter extends CustomPainter {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < columns; col++) {
         final rect = Rect.fromPoints(
-          Offset(col * cellSize, row * cellSize),
-          Offset((col + 1) * cellSize, (row + 1) * cellSize),
+          Offset(
+            col * cellSize,
+            row * cellSize,
+          ),
+          Offset(
+            (col + 1) * cellSize,
+            (row + 1) * cellSize,
+          ),
         );
         final paint = Paint()
           ..color = cellColors[row * columns + col]
           ..style = PaintingStyle.fill;
-        canvas.drawRect(rect, paint);
+        canvas.drawRect(
+          rect,
+          paint,
+        );
       }
     }
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 }

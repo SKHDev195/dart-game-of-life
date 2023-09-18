@@ -5,6 +5,7 @@ import 'package:game_of_life/pages/setup_page/widgets/fields.dart';
 import 'package:game_of_life/pages/setup_page/widgets/separator.dart';
 import 'package:game_of_life/pages/setup_page/widgets/start_button.dart';
 import 'package:game_of_life/providers/setup/setup_provider.dart';
+import 'package:game_of_life/providers/timer_context_provider/timer_context_provider.dart';
 import 'package:game_of_life/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -59,6 +60,10 @@ class _SetupPageState extends State<SetupPage> {
 
       context.read<GameProvider>().assignGridRenderer(
             gridRenderer: gridRenderer,
+          );
+      context.read<TimerContextProvider>().createContext(
+            timerType!,
+            gridRenderer.grid,
           );
       Navigator.pushNamed(
         context,
