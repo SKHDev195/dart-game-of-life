@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:game_of_life/repositories/game_repository.dart';

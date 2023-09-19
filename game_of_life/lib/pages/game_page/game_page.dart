@@ -39,6 +39,8 @@ class _GamePageState extends State<GamePage> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.black,
+                        width: 3,
+                        strokeAlign: BorderSide.strokeAlignCenter,
                       ),
                     ),
                     child: gameProvider.displayGrid(context),

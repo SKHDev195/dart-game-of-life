@@ -32,8 +32,14 @@ final class ColoredGridRenderer extends GridRenderer {
     final height = MediaQuery.of(context).size.height;
     final aspectRatio = width / height;
 
-    final widthOffset = (aspectRatio < 1) ? 60 : 300;
-    final heightOffset = (aspectRatio > 1) ? 60 : 300;
+    final widthPaddingMin = width * 0.05;
+    final widthPaddingMax = width * 0.12;
+    final heightPaddingMin = height * 0.35;
+    final heightPaddingMax = height * 0.45;
+
+    final widthOffset = (aspectRatio < 1) ? widthPaddingMax : widthPaddingMin;
+    final heightOffset =
+        (aspectRatio > 1) ? heightPaddingMax : heightPaddingMin;
 
     double permittedWidth = (width - widthOffset) / grid.columns;
     double permittedHeight = (height - heightOffset) / grid.rows;

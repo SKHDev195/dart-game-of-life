@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:game_of_life/grid_director/grid_builder.dart';
 import 'package:game_of_life/models/custom_error.dart';
-import 'package:game_of_life/timer/timer_strategy.dart';
 
 import '../grid_director/grid_director.dart';
 import '../grid_renderer/grid_renderer.dart';
 import '../grid_renderer/grid_renderer_creator.dart';
-import '../timer/timer_context.dart';
 import '../timer/timer_types.dart';
 
 final class GridRendererRepository {

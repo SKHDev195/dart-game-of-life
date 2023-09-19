@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:game_of_life/pages/setup_page/setup_page.dart';
 
 import '../models/custom_error.dart';
 
@@ -25,9 +26,15 @@ sealed class ErrorDialogRenderer {
                 child: const Text(
                   'OK',
                 ),
-                onPressed: () => Navigator.pop(
-                  context,
-                ),
+                onPressed: () {
+                  Navigator.pop(
+                    context,
+                  );
+                  Navigator.pushNamed(
+                    context,
+                    SetupPage.routeName,
+                  );
+                },
               ),
             ],
           );
@@ -46,9 +53,15 @@ sealed class ErrorDialogRenderer {
             ),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(
-                  context,
-                ),
+                onPressed: () {
+                  Navigator.pop(
+                    context,
+                  );
+                  Navigator.pushNamed(
+                    context,
+                    SetupPage.routeName,
+                  );
+                },
                 child: const Text(
                   'OK',
                 ),
