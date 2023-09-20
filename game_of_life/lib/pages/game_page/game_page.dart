@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'package:game_of_life/pages/game_page/utils/stop_dialog_renderer.dart';
 import 'package:game_of_life/pages/game_page/widgets/game_timer_buttons.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/game_provider/game_provider.dart';
 import '../../providers/timer_context_provider/timer_context_provider.dart';
+import '../setup_page/setup_page.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({
@@ -28,7 +30,11 @@ class _GamePageState extends State<GamePage> {
       ),
       body: StateNotifierBuilder(
         stateNotifier: timerContextProvider,
-        builder: (context, value, child) {
+        builder: (
+          context,
+          _,
+          __,
+        ) {
           return Center(
             child: SafeArea(
               minimum: const EdgeInsets.all(20),
@@ -60,11 +66,17 @@ class _GamePageState extends State<GamePage> {
             Expanded(
               child: StopButton(
                 onPressed: () {
-                  gameProvider.stop();
-                  timerContextProvider.stop();
-                  Navigator.pop(
-                    context,
-                  );
+                  StopDialogRenderer.stopDialog(context, () {
+                    Navigator.pop(
+                      context,
+                    );
+                    Navigator.pushNamed(
+                      context,
+                      SetupPage.routeName,
+                    );
+                    gameProvider.stop();
+                    timerContextProvider.stop();
+                  });
                 },
               ),
             ),

@@ -8,13 +8,16 @@ sealed class StopDialogRenderer {
   static const title = 'Warning';
   static const content = 'Do you want to stop the game and go back to setup?';
 
-  static void errorDialog(
+  static void stopDialog(
     BuildContext context,
+    void Function()? onPressed,
   ) {
     if (Platform.isIOS) {
       showCupertinoDialog(
         context: context,
-        builder: (context) {
+        builder: (
+          context,
+        ) {
           return CupertinoAlertDialog(
             title: const Text(
               title,
@@ -24,25 +27,17 @@ sealed class StopDialogRenderer {
             ),
             actions: [
               CupertinoDialogAction(
-                child: const Text(
-                  'YES',
+                onPressed: () => Navigator.pop(
+                  context,
                 ),
-                onPressed: () {
-                  Navigator.pop(
-                    context,
-                  );
-                  Navigator.pushNamed(
-                    context,
-                    SetupPage.routeName,
-                  );
-                },
-              ),
-              CupertinoDialogAction(
                 child: const Text(
                   'NO',
                 ),
-                onPressed: () => Navigator.pop(
-                  context,
+              ),
+              CupertinoDialogAction(
+                onPressed: onPressed,
+                child: const Text(
+                  'YES',
                 ),
               ),
             ],
@@ -62,15 +57,17 @@ sealed class StopDialogRenderer {
             ),
             actions: [
               TextButton(
-                onPressed: () {
-                  if (Navigator.canPop(context)) {
-                    Navigator.pop(
-                      context,
-                    );
-                  }
-                },
+                onPressed: () => Navigator.pop(
+                  context,
+                ),
                 child: const Text(
-                  'OK',
+                  'NO',
+                ),
+              ),
+              TextButton(
+                onPressed: onPressed,
+                child: const Text(
+                  'YES',
                 ),
               ),
             ],

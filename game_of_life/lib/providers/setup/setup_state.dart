@@ -9,7 +9,7 @@ enum SetupStatus {
   error,
 }
 
-class SetupState extends Equatable {
+final class SetupState extends Equatable {
   const SetupState({
     required this.setupStatus,
     required this.customError,
