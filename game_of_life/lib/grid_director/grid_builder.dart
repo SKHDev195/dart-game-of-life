@@ -1,8 +1,10 @@
 import 'dart:math';
 
-import 'cell.dart';
-import 'grid.dart';
-import 'grid_state.dart';
+import 'package:flutter/material.dart';
+
+import '../cell/cell.dart';
+import '../grid/grid.dart';
+import '../grid/grid_state.dart';
 
 abstract base class GridBuilder {
   GridBuilder._internal();
@@ -21,8 +23,6 @@ abstract base class GridBuilder {
 
   void setInitialState() {
     _grid!.state = _initialState!;
-    _grid!.cellsSink.add(_grid!.state!.cells);
-    print('initial state added');
   }
 }
 
