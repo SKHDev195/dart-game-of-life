@@ -24,9 +24,13 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
         gridRenderer: gridRenderer,
       );
       this.gridRenderer = gridRenderer;
-    } on CustomError {
+      state = state.copyWith(
+        gameStatus: GameStatus.loaded,
+      );
+    } on CustomError catch (e) {
       state = state.copyWith(
         gameStatus: GameStatus.error,
+        customError: e,
       );
       rethrow;
     }
@@ -39,54 +43,22 @@ final class GameProvider extends StateNotifier<GameState> with LocatorMixin {
       Widget grid = read<GameRepository>().gridRenderer.renderGrid(
             context,
           );
-      state = state.copyWith(
-        gameStatus: GameStatus.initial,
-      );
       return grid;
-    } on CustomError {
+    } on CustomError catch (e) {
       state = state.copyWith(
         gameStatus: GameStatus.error,
+        customError: e,
       );
       rethrow;
     }
   }
 
-  void pause() {
-    try {
-      state = state.copyWith(
-        gameStatus: GameStatus.paused,
-      );
-    } on CustomError {
-      state = state.copyWith(
-        gameStatus: GameStatus.error,
-      );
-      rethrow;
-    }
-  }
-
-  void start() {
-    try {
-      state = state.copyWith(
-        gameStatus: GameStatus.ongoing,
-      );
-    } on CustomError {
-      state = state.copyWith(
-        gameStatus: GameStatus.error,
-      );
-      rethrow;
-    }
-  }
-
-  void stop() {
-    try {
-      state = state.copyWith(
-        gameStatus: GameStatus.stopped,
-      );
-    } on CustomError {
-      state = state.copyWith(
-        gameStatus: GameStatus.error,
-      );
-      rethrow;
-    }
+  void reactToTimerError(
+    CustomError e,
+  ) {
+    state = state.copyWith(
+      gameStatus: GameStatus.error,
+      customError: e,
+    );
   }
 }

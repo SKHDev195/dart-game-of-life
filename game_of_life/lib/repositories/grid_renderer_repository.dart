@@ -33,7 +33,7 @@ final class GridRendererRepository {
         grid: gridDirector.builder.grid,
       );
       return gridRendererCreator.createRenderer();
-    } catch (e) {
+    } on Exception {
       throw const CustomError(
         message: 'An error has occured',
       );

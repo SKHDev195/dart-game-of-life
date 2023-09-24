@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
-import 'package:game_of_life/providers/theme_provider/theme_provider.dart';
 import 'package:game_of_life/providers/timer_context_provider/timer_context_provider.dart';
-import 'package:game_of_life/repositories/theme_repository.dart';
 import 'package:game_of_life/services/theme_service.dart';
 import 'package:game_of_life/utils/app_theme.dart';
 import 'providers/game_provider/game_provider.dart';
@@ -22,7 +20,7 @@ void main() {
   );
 }
 
-class GameOfLife extends StatelessWidget {
+final class GameOfLife extends StatelessWidget {
   const GameOfLife({
     super.key,
   });

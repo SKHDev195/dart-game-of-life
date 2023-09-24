@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:game_of_life/pages/game_page/utils/stop_dialog_renderer.dart';
 import 'package:game_of_life/pages/game_page/widgets/game_timer_buttons.dart';
-import 'package:game_of_life/repositories/theme_repository.dart';
+
+import 'package:game_of_life/utils/error_dialog_renderer.dart';
+import 'package:game_of_life/utils/flushbar_renderer.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/game_provider/game_provider.dart';
 import '../../providers/timer_context_provider/timer_context_provider.dart';
 import '../../services/theme_service.dart';
-import '../../utils/app_theme.dart';
+import '../../widgets/loading_widget.dart';
 import '../../widgets/theme_switchers.dart';
 import '../setup_page/setup_page.dart';
 
@@ -27,6 +29,17 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     final gameProvider = context.read<GameProvider>();
     final timerContextProvider = context.read<TimerContextProvider>();
+    GameState gameState = context.watch<GameState>();
+
+    if (gameState.gameStatus == GameStatus.setup) {
+      return const LoadingWidget();
+    } else if (gameState.gameStatus == GameStatus.error) {
+      ErrorDialogRenderer.errorDialog(
+        context,
+        gameState.customError,
+      );
+      return const LoadingWidget();
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game of Life'),
@@ -53,7 +66,12 @@ class _GamePageState extends State<GamePage> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: (context.watch<ThemeService>().isDark)
-                            ? const Color.fromARGB(255, 84, 84, 84)
+                            ? const Color.fromARGB(
+                                255,
+                                84,
+                                84,
+                                84,
+                              )
                             : Colors.black,
                         width: 3,
                         strokeAlign: BorderSide.strokeAlignCenter,
@@ -76,6 +94,7 @@ class _GamePageState extends State<GamePage> {
             Expanded(
               child: StopButton(
                 onPressed: () {
+                  FlushbarRenderer.showOnHoldFlushbar(context);
                   StopDialogRenderer.stopDialog(context, () {
                     Navigator.pop(
                       context,
@@ -84,7 +103,6 @@ class _GamePageState extends State<GamePage> {
                       context,
                       SetupPage.routeName,
                     );
-                    gameProvider.stop();
                     timerContextProvider.stop();
                   });
                 },
@@ -93,7 +111,7 @@ class _GamePageState extends State<GamePage> {
             Expanded(
               child: StartButton(
                 onPressed: () {
-                  gameProvider.start();
+                  FlushbarRenderer.showGoingFlushbar(context);
                   timerContextProvider.start();
                 },
               ),
@@ -101,7 +119,7 @@ class _GamePageState extends State<GamePage> {
             Expanded(
               child: PauseButton(
                 onPressed: () {
-                  gameProvider.pause();
+                  FlushbarRenderer.showPausedFlushbar(context);
                   timerContextProvider.pause();
                 },
               ),

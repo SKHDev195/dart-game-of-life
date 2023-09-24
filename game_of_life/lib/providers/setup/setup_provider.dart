@@ -39,9 +39,10 @@ final class SetupProvider extends StateNotifier<SetupState> with LocatorMixin {
       );
 
       return gridRenderer;
-    } on CustomError {
+    } on CustomError catch (e) {
       state = state.copyWith(
         setupStatus: SetupStatus.error,
+        customError: e,
       );
       rethrow;
     }

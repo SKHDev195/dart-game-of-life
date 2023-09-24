@@ -1,3 +1,4 @@
+import '../models/custom_error.dart';
 import 'grid_builder.dart';
 
 abstract base class Director {
@@ -29,11 +30,17 @@ final class GridDirector extends Director {
     required int rows,
     required int columns,
   }) {
-    builder.createGrid(
-      rows,
-      columns,
-    );
-    builder.generateInitialState();
-    builder.setInitialState();
+    try {
+      builder.createGrid(
+        rows,
+        columns,
+      );
+      builder.generateInitialState();
+      builder.setInitialState();
+    } on Exception {
+      throw const CustomError(
+        message: 'An error has occured',
+      );
+    }
   }
 }

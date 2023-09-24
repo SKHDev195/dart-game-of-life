@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'package:game_of_life/providers/game_provider/game_provider.dart';
 import 'package:game_of_life/timer/timer_strategy.dart';
 import 'package:game_of_life/timer/timer_types.dart';
 
@@ -24,15 +25,26 @@ final class TimerContextProvider extends StateNotifier<TimerContextState>
     TimerTypes timerTypes,
     Grid grid,
   ) {
-    timerContext = BasicTimerContext()
-      ..setStrategy(
-        BasicTimerStrategy(
-          grid: grid,
-          onTick: onTick,
-        )..setTimer(
-            timerTypes,
-          ),
+    try {
+      timerContext = BasicTimerContext()
+        ..setStrategy(
+          BasicTimerStrategy(
+            grid: grid,
+            onTick: onTick,
+          )..setTimer(
+              timerTypes,
+            ),
+        );
+    } on Exception {
+      const e = CustomError(
+        message: 'An error has occured',
       );
+      read<GameProvider>().reactToTimerError(e);
+      state = state.copyWith(
+        timerContextStatus: TimerContextStatus.error,
+        customError: e,
+      );
+    }
   }
 
   void start() {
@@ -41,9 +53,14 @@ final class TimerContextProvider extends StateNotifier<TimerContextState>
         timerContextStatus: TimerContextStatus.ticking,
       );
       timerContext.strategy.onStart();
-    } on CustomError {
+    } on Exception {
+      const e = CustomError(
+        message: 'An error has occured',
+      );
+      read<GameProvider>().reactToTimerError(e);
       state = state.copyWith(
         timerContextStatus: TimerContextStatus.error,
+        customError: e,
       );
     }
   }
@@ -54,9 +71,14 @@ final class TimerContextProvider extends StateNotifier<TimerContextState>
         timerContextStatus: TimerContextStatus.paused,
       );
       timerContext.strategy.onPause();
-    } on CustomError {
+    } on Exception {
+      const e = CustomError(
+        message: 'An error has occured',
+      );
+      read<GameProvider>().reactToTimerError(e);
       state = state.copyWith(
-        timerContextStatus: TimerContextStatus.paused,
+        timerContextStatus: TimerContextStatus.error,
+        customError: e,
       );
     }
   }
@@ -67,9 +89,14 @@ final class TimerContextProvider extends StateNotifier<TimerContextState>
         timerContextStatus: TimerContextStatus.stopped,
       );
       timerContext.strategy.onStop();
-    } on CustomError {
+    } on Exception {
+      const e = CustomError(
+        message: 'An error has occured',
+      );
+      read<GameProvider>().reactToTimerError(e);
       state = state.copyWith(
-        timerContextStatus: TimerContextStatus.stopped,
+        timerContextStatus: TimerContextStatus.error,
+        customError: e,
       );
     }
   }
@@ -102,9 +129,16 @@ final class TimerContextProvider extends StateNotifier<TimerContextState>
 
       timerContext.strategy.timer.reset();
       timerContext.strategy.timer.start();
-    } on CustomError {
+    } on Exception {
+      const e = CustomError(
+        message: 'An error has occured',
+      );
+      read<GameProvider>().reactToTimerError(
+        e,
+      );
       state = state.copyWith(
         timerContextStatus: TimerContextStatus.error,
+        customError: e,
       );
     }
   }

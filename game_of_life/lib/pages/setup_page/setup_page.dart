@@ -7,6 +7,7 @@ import 'package:game_of_life/pages/setup_page/widgets/start_button.dart';
 import 'package:game_of_life/providers/setup/setup_provider.dart';
 import 'package:game_of_life/providers/timer_context_provider/timer_context_provider.dart';
 import 'package:game_of_life/utils/error_dialog_renderer.dart';
+import 'package:game_of_life/widgets/loading_widget.dart';
 import 'package:game_of_life/widgets/theme_switchers.dart';
 import 'package:provider/provider.dart';
 
@@ -80,7 +81,16 @@ class _SetupPageState extends State<SetupPage> {
 
   @override
   Widget build(BuildContext context) {
-    final setupState = context.watch<SetupState>();
+    SetupState setupState = context.watch<SetupState>();
+    if (setupState.setupStatus == SetupStatus.error) {
+      ErrorDialogRenderer.errorDialog(
+        context,
+        setupState.customError,
+      );
+      return const LoadingWidget();
+    } else if (setupState.setupStatus == SetupStatus.submitting) {
+      return const LoadingWidget();
+    }
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

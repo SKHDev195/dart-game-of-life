@@ -4,10 +4,7 @@ part of 'game_provider.dart';
 
 enum GameStatus {
   setup,
-  initial,
-  ongoing,
-  paused,
-  stopped,
+  loaded,
   error,
 }
 

@@ -42,6 +42,10 @@ abstract base class TimerStrategy {
           ),
           onTick,
         ),
+      TimerTypes.perTenthOfASecond => PausableTimer(
+          const Duration(milliseconds: 100),
+          onTick,
+        ),
     };
 
     _timer = timer;

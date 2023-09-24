@@ -12,9 +12,4 @@ class ThemeService extends ChangeNotifier {
     isDark = true;
     notifyListeners();
   }
-
-  void toggleTheme() {
-    isDark = !isDark;
-    notifyListeners();
-  }
 }

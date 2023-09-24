@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:game_of_life/providers/theme_provider/theme_provider.dart';
 import 'package:game_of_life/services/theme_service.dart';
 import 'package:provider/provider.dart';
 

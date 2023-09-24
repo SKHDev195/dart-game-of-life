@@ -7,9 +7,13 @@ import 'package:game_of_life/pages/setup_page/setup_page.dart';
 import '../models/custom_error.dart';
 
 sealed class ErrorDialogRenderer {
-  static const errorTitle = 'An error has occured';
+  static const errorTitle = 'Alert!';
 
-  static void errorDialog(BuildContext context, CustomError e) {
+  static void errorDialog(
+    BuildContext context,
+    CustomError e,
+  ) {
+    print(e.message);
     if (Platform.isIOS) {
       showCupertinoDialog(
         context: context,
@@ -19,7 +23,7 @@ sealed class ErrorDialogRenderer {
               errorTitle,
             ),
             content: Text(
-              '$e.message',
+              e.message,
             ),
             actions: [
               CupertinoDialogAction(
@@ -49,7 +53,7 @@ sealed class ErrorDialogRenderer {
               errorTitle,
             ),
             content: Text(
-              '$e.message',
+              e.message,
             ),
             actions: [
               TextButton(

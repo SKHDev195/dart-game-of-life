@@ -10,6 +10,9 @@ enum TimerTypes {
   ),
   perQuarterSecond(
     prettyName: 'Per quarter second',
+  ),
+  perTenthOfASecond(
+    prettyName: 'Per tenth of a second',
   );
 
   final String prettyName;

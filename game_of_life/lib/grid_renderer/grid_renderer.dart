@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/custom_error.dart';
 import '../widgets/colored_grid.dart';
 
 import '../grid/grid.dart';
@@ -52,14 +53,20 @@ final class ColoredGridRenderer extends GridRenderer {
 
   @override
   Widget renderGrid(BuildContext context) {
-    final cellSize = getSize(context);
-    return ColoredGrid(
-      rows: grid.rows,
-      columns: grid.columns,
-      cells: grid.state!.cells,
-      aliveCellsColor: aliveCellsColor,
-      deadCellsColor: deadCellsColor,
-      cellSize: cellSize,
-    );
+    try {
+      final cellSize = getSize(context);
+      return ColoredGrid(
+        rows: grid.rows,
+        columns: grid.columns,
+        cells: grid.state!.cells,
+        aliveCellsColor: aliveCellsColor,
+        deadCellsColor: deadCellsColor,
+        cellSize: cellSize,
+      );
+    } on Exception {
+      throw const CustomError(
+        message: 'An error has occured',
+      );
+    }
   }
 }
