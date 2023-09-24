@@ -3,6 +3,8 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:game_of_life/providers/theme_provider/theme_provider.dart';
 import 'package:game_of_life/providers/timer_context_provider/timer_context_provider.dart';
 import 'package:game_of_life/repositories/theme_repository.dart';
+import 'package:game_of_life/services/theme_service.dart';
+import 'package:game_of_life/utils/app_theme.dart';
 import 'providers/game_provider/game_provider.dart';
 import 'repositories/game_repository.dart';
 import 'pages/game_page/game_page.dart';
@@ -13,7 +15,10 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    const GameOfLife(),
+    ChangeNotifierProvider(
+      create: (_) => ThemeService(),
+      child: const GameOfLife(),
+    ),
   );
 }
 
@@ -26,9 +31,6 @@ class GameOfLife extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<ThemeRepository>(
-          create: (_) => ThemeRepository(),
-        ),
         Provider<GridRendererRepository>(
           create: (_) => GridRendererRepository(),
         ),
@@ -36,23 +38,29 @@ class GameOfLife extends StatelessWidget {
           create: (_) => GameRepository(),
         ),
         StateNotifierProvider<SetupProvider, SetupState>(
-          create: (context) => SetupProvider(),
+          create: (_) => SetupProvider(),
         ),
         StateNotifierProvider<TimerContextProvider, TimerContextState>(
-          create: (context) => TimerContextProvider(),
+          create: (_) => TimerContextProvider(),
         ),
         StateNotifierProvider<GameProvider, GameState>(
-          create: (context) => GameProvider(),
+          create: (_) => GameProvider(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Game of Life',
-        debugShowCheckedModeBanner: false,
-        theme: context.watch<ThemeRepository>().appTheme,
-        home: const SetupPage(),
-        routes: {
-          SetupPage.routeName: (context) => const SetupPage(),
-          GamePage.routeName: (context) => const GamePage(),
+      child: Consumer<ThemeService>(
+        builder: (context, themeService, _) {
+          return MaterialApp(
+            title: 'Game of Life',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeService.isDark ? ThemeMode.dark : ThemeMode.light,
+            home: const SetupPage(),
+            routes: {
+              SetupPage.routeName: (context) => const SetupPage(),
+              GamePage.routeName: (context) => const GamePage(),
+            },
+          );
         },
       ),
     );

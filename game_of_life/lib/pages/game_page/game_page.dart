@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:game_of_life/pages/game_page/utils/stop_dialog_renderer.dart';
 import 'package:game_of_life/pages/game_page/widgets/game_timer_buttons.dart';
+import 'package:game_of_life/repositories/theme_repository.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/game_provider/game_provider.dart';
 import '../../providers/timer_context_provider/timer_context_provider.dart';
+import '../../services/theme_service.dart';
+import '../../utils/app_theme.dart';
+import '../../widgets/theme_switchers.dart';
 import '../setup_page/setup_page.dart';
 
 class GamePage extends StatefulWidget {
@@ -27,6 +31,10 @@ class _GamePageState extends State<GamePage> {
       appBar: AppBar(
         title: const Text('Game of Life'),
         automaticallyImplyLeading: false,
+        actions: const [
+          DarkThemeButton(),
+          LightThemeButton(),
+        ],
       ),
       body: StateNotifierBuilder(
         stateNotifier: timerContextProvider,
@@ -44,7 +52,9 @@ class _GamePageState extends State<GamePage> {
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.black,
+                        color: (context.watch<ThemeService>().isDark)
+                            ? const Color.fromARGB(255, 84, 84, 84)
+                            : Colors.black,
                         width: 3,
                         strokeAlign: BorderSide.strokeAlignCenter,
                       ),

@@ -7,6 +7,7 @@ import 'package:game_of_life/pages/setup_page/widgets/start_button.dart';
 import 'package:game_of_life/providers/setup/setup_provider.dart';
 import 'package:game_of_life/providers/timer_context_provider/timer_context_provider.dart';
 import 'package:game_of_life/utils/error_dialog_renderer.dart';
+import 'package:game_of_life/widgets/theme_switchers.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/custom_error.dart';
@@ -85,6 +86,11 @@ class _SetupPageState extends State<SetupPage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Setup'),
+          automaticallyImplyLeading: false,
+          actions: const [
+            DarkThemeButton(),
+            LightThemeButton(),
+          ],
         ),
         body: Center(
           child: Padding(
