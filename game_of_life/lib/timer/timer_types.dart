@@ -1,18 +1,18 @@
 enum TimerTypes {
-  perSecond(
-    prettyName: 'Per second',
-  ),
   perMinute(
-    prettyName: 'Per minute',
+    prettyName: 'Timer: one tick per minute',
+  ),
+  perSecond(
+    prettyName: 'Timer: one tick per second',
   ),
   perHalfSecond(
-    prettyName: 'Per half second',
+    prettyName: 'Timer: one tick per half second',
   ),
   perQuarterSecond(
-    prettyName: 'Per quarter second',
+    prettyName: 'Timer: one tick per quarter of a second',
   ),
   perTenthOfASecond(
-    prettyName: 'Per tenth of a second',
+    prettyName: 'Timer: one tick per tenth of a second',
   );
 
   final String prettyName;
